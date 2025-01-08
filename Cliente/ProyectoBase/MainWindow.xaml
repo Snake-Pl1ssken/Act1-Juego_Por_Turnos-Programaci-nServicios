@@ -11,7 +11,7 @@
             <ImageBrush Stretch="UniformToFill"/>
         </Canvas.Background>
         <Image x:Name="BackgroundImage" Height="344" Canvas.Left="10" Canvas.Top="55" Width="442" Source="/Background.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBox x:Name="PortText" Width="62" Height="18" Text="1024" HorizontalAlignment="Center" Canvas.Left="253" Canvas.Top="20" VerticalAlignment="Top"/>
+        <TextBox x:Name="PortText" Width="62" Height="18" Text="1024" HorizontalAlignment="Center" Canvas.Left="253" Canvas.Top="20" VerticalAlignment="Top" TextChanged="PortText_TextChanged"/>
         <Label x:Name="PortLabel" Content="Port" FontWeight="Bold" FontSize="14" Height="32" Width="50" HorizontalAlignment="Center" Canvas.Left="204" Canvas.Top="12" VerticalAlignment="Top"/>
         <Button x:Name="StopButton" Content="Stop" Height="23" Width="113" Background="White" HorizontalAlignment="Left" Canvas.Left="337" Canvas.Top="17" VerticalAlignment="Top" Click="StopButton_Click"/>
         <TextBox x:Name="AddressText" Width="119" Height="18" Text="127.0.0.1" HorizontalAlignment="Center" Canvas.Left="80" Canvas.Top="20" VerticalAlignment="Top"/>

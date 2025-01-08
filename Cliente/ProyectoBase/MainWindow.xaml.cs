@@ -18,8 +18,9 @@ namespace RockScissorsPaper
         int rivalScore;
         int youPose;
         int rivalPose;
-
+        Socket clientSocket;
         bool windowInitialized;
+        bool isClient;
 
         public MainWindow()
         {
@@ -55,7 +56,48 @@ namespace RockScissorsPaper
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                // Initialize client
 
+                IPAddress address = IPAddress.Parse(AddressText.Text);
+                int port = Int32.Parse(PortText.Text);
+                IPEndPoint endPoint = new IPEndPoint(address, port);
+                clientSocket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                clientSocket.Connect(endPoint);
+
+                //clientStream = new NetworkStream(clientSocket);
+                //clientWriter = new StreamWriter(clientStream, Encoding.UTF8);
+                //clientReader = new StreamReader(clientStream, Encoding.UTF8);
+
+                //ChatText.Text += "[Client] Connected to server " + clientSocket.RemoteEndPoint.ToString() + "\n";
+                Console.WriteLine("Cliente conectado");
+                //Background = Brushes.Orchid;
+                isClient = true;
+                //ShowDisconnectButtonsForClient();
+                //ResetCells();
+
+                // Wait for server greeting
+
+                //EnableInputCommands(false);
+                //ForceRepaint();
+                //string line = clientReader.ReadLine();
+
+                // Process server greeting
+
+                //ProcessCommand(line);
+
+                // It's our turn to send commands
+                // enable UI so player decide which command to send
+
+                //EnableInputCommands(true);
+
+            }
+            catch (Exception exception)
+            {
+                //ChatText.Text += "[Client] Error: " + exception.ToString() + "\n";
+                Console.WriteLine(exception.ToString());
+            }
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
