@@ -73,6 +73,10 @@ namespace RockScissorsPaper
             serverSocket.Listen();
             isClient = false;
             Console.WriteLine("ServConnected");
+
+            serviceSocket = serverSocket.Accept();
+            Console.WriteLine("ClienteAceptado");
+
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
