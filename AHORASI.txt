@@ -2,3 +2,9 @@ Javi: Servidor
 Jorge: Cliente
 
 No usar 127.0.0.1...
+
+
+Estado del proyecto:
+
+- Servidor y cliente se logran conectar entre si (al menos en un ordenador) // done
+- Ahora servidor y cliente se conectan en 2 ordenadores distintos (192.168.102.38 OJO HAN DE ESTAR EN LA MISMA RED)
