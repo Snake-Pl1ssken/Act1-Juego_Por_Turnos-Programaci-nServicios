@@ -65,6 +65,8 @@ namespace RockScissorsPaper
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
+            try 
+            {
             IPAddress address = IPAddress.Parse(AddressText.Text);
             int port = Int32.Parse(PortText.Text);
             IPEndPoint endPoint = new IPEndPoint(address, port);
@@ -76,6 +78,9 @@ namespace RockScissorsPaper
 
             serviceSocket = serverSocket.Accept();
             Console.WriteLine("ClienteAceptado");
+            }
+            catch(Exception escepcion) { Console.WriteLine(escepcion.ToString()); }
+            
 
         }
 
