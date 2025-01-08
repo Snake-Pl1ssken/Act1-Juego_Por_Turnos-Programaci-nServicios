@@ -149,5 +149,6 @@ namespace RockScissorsPaper
             Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new Action(delegate { }));
         }
 
+
     }
 }
