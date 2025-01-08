@@ -1,0 +1,48 @@
+﻿<Window x:Class="RockScissorsPaper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RockScissorsPaper"
+        mc:Ignorable="d"
+        Title="Rock Scissors Paper" Height="486" Width="476" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow" Icon="/Icon.png" HorizontalAlignment="Right" VerticalAlignment="Top" ResizeMode="NoResize" Background="#FFFF7F27">
+    <Canvas x:Name="Canvas">
+        <Canvas.Background>
+            <ImageBrush Stretch="UniformToFill"/>
+        </Canvas.Background>
+        <Image x:Name="BackgroundImage" Height="344" Canvas.Left="10" Canvas.Top="55" Width="442" Source="/Background.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox x:Name="PortText" Width="62" Height="18" Text="1024" HorizontalAlignment="Center" Canvas.Left="253" Canvas.Top="20" VerticalAlignment="Top"/>
+        <Label x:Name="PortLabel" Content="Port" FontWeight="Bold" FontSize="14" Height="32" Width="50" HorizontalAlignment="Center" Canvas.Left="204" Canvas.Top="12" VerticalAlignment="Top"/>
+        <Button x:Name="StopButton" Content="Stop" Height="23" Width="113" Background="White" HorizontalAlignment="Left" Canvas.Left="337" Canvas.Top="17" VerticalAlignment="Top" Click="StopButton_Click"/>
+        <TextBox x:Name="AddressText" Width="119" Height="18" Text="127.0.0.1" HorizontalAlignment="Center" Canvas.Left="80" Canvas.Top="20" VerticalAlignment="Top"/>
+        <Label x:Name="AddressLabel" Content="Address" FontWeight="Bold" FontSize="14" Height="30" Width="71" HorizontalAlignment="Center" Canvas.Left="10" Canvas.Top="14" VerticalAlignment="Top"/>
+        <Button x:Name="StartButton" Content="Start" Height="23" Width="112" Background="White" HorizontalAlignment="Left" Canvas.Left="338" Canvas.Top="16" VerticalAlignment="Center" Click="StartButton_Click"/>
+        <ComboBox x:Name="PoseCombo" Width="67" SelectedIndex="0" HorizontalAlignment="Left" Canvas.Left="10" Canvas.Top="409" VerticalAlignment="Center" SelectionChanged="PoseCombo_SelectionChanged">
+            <ComboBoxItem Content="Rock"/>
+            <ComboBoxItem Content="Paper"/>
+            <ComboBoxItem Content="Scissors"/>
+        </ComboBox>
+        <Label x:Name="YouLabel" Content="YOU" Canvas.Left="26" Canvas.Top="66" Height="58" Width="114" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Segoe Script" FontWeight="Bold"/>
+        <Label x:Name="RivalLabel" Content="RIVAL" Canvas.Left="321" Canvas.Top="64" Height="58" Width="137" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Segoe Script"/>
+        <Label x:Name="YouScoreLabel" Content="0" Canvas.Left="26" Canvas.Top="124" Height="67" Width="54" FontSize="36" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe Script"/>
+        <Label x:Name="RivalScoreLabel" Content="0" Canvas.Left="392" Canvas.Top="129" Height="67" Width="54" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Image x:Name="YouPaperImage" Height="160" Canvas.Left="10" Canvas.Top="196" Width="190" Source="/YouPaper.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image x:Name="YouScissorsImage" Height="160" Canvas.Left="10" Canvas.Top="196" Width="160" Source="/YouScissors.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image x:Name="YouRockImage" Height="160" Canvas.Left="10" Canvas.Top="196" Width="160" Source="/YouRock.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image x:Name="RivalPaperImage" Height="160" Canvas.Left="286" Canvas.Top="198" Width="160" Source="/RivalPaper.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Image x:Name="RivalRockImage" Height="160" Canvas.Left="286" Canvas.Top="196" Width="160" Source="/RivalRock.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Image x:Name="RivalScissorsImage" Height="160" Canvas.Left="286" Canvas.Top="196" Width="160" Source="/RivalScissors.png" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Image x:Name="RivalThinkingImage" Height="147" Canvas.Left="266" Canvas.Top="181" Width="183" Source="/RivalThinking.png"/>
+        <Button x:Name="ReadyButton" Content="Ready" Height="23" Width="53" Background="White" Canvas.Left="90" Canvas.Top="409" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ReadyButton_Click"/>
+
+    </Canvas>
+</Window>
