@@ -18,9 +18,19 @@ namespace RockScissorsPaper
         int rivalScore;
         int youPose;
         int rivalPose;
-
+        bool isClient;
         bool windowInitialized;
 
+        Socket clientSocket;
+        NetworkStream clientStream;
+        StreamWriter clientWriter;
+        StreamReader clientReader;
+
+        Socket serverSocket;
+        Socket serviceSocket;
+        NetworkStream serviceStream;
+        StreamWriter serviceWriter;
+        StreamReader serviceReader;
         public MainWindow()
         {
             InitializeComponent();
@@ -55,7 +65,14 @@ namespace RockScissorsPaper
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-
+            IPAddress address = IPAddress.Parse(AddressText.Text);
+            int port = Int32.Parse(PortText.Text);
+            IPEndPoint endPoint = new IPEndPoint(address, port);
+            serverSocket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            serverSocket.Bind(endPoint);
+            serverSocket.Listen();
+            isClient = false;
+            Console.WriteLine("ServConnected");
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
