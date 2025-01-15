@@ -74,6 +74,23 @@ namespace RockScissorsPaper
                 Console.WriteLine("Cliente conectado");
                 //Background = Brushes.Orchid;
                 isClient = true;
+
+                PoseCombo.IsEnabled = true;
+                ReadyButton.IsEnabled = true;
+                
+                StartButton.Visibility = Visibility.Hidden;
+                StopButton.Visibility = Visibility.Visible;
+                
+                YouLabel.Visibility = Visibility.Visible;
+                RivalLabel.Visibility = Visibility.Visible;
+
+                YouScoreLabel.Visibility = Visibility.Visible;
+                RivalScoreLabel.Visibility = Visibility.Visible;
+
+                Background = Brushes.Green;
+
+
+
                 //ShowDisconnectButtonsForClient();
                 //ResetCells();
 
@@ -102,18 +119,73 @@ namespace RockScissorsPaper
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                clientSocket.Close();
 
+                PoseCombo.IsEnabled = false;
+                ReadyButton.IsEnabled = false;
+
+                StartButton.Visibility = Visibility.Visible;
+                StopButton.Visibility = Visibility.Hidden;
+                Background = Brushes.Gray;
+            }
+            catch 
+            { 
+                Console.WriteLine("Error");
+            }
         }
 
         private void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
+            // Envio mi ready
+            byte[] data = new byte[1];
+            data[0] = 7;
+            clientSocket.Send(data);
 
+            // Espero su ready
+
+            // Envio mi movimiento
+
+            if (PoseCombo.SelectedIndex == 0)
+            {
+                youPose = 0;
+            }
+            else if (PoseCombo.SelectedIndex == 1)
+            {
+                youPose = 1;
+            }
+            else
+            {
+                youPose = 2;
+            }
+
+            data[0] = (byte)youPose;
+            clientSocket.Send(data);
+
+            // Recibo su movimiento
+
+            clientSocket.Receive(data);
+
+            if (clientSocket.Receive(data) == 0)
+            {
+                rivalPose = 0;
+            }
+            else if (clientSocket.Receive(data) == 1)
+            {
+                rivalPose = 1;
+            }
+            else
+            {
+                rivalPose = 2;
+            }
+            Console.WriteLine("Recibiste: " + data[0]);
         }
 
 
         private void PoseCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(!windowInitialized) { return; }
+            if (!windowInitialized) { return; }
 
             YouRockImage.Visibility = Visibility.Hidden;
             YouPaperImage.Visibility = Visibility.Hidden;
