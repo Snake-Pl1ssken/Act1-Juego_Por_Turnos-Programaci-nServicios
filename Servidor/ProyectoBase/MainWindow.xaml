@@ -41,7 +41,7 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <Image x:Name="RivalThinkingImage" Height="147" Canvas.Left="266" Canvas.Top="181" Width="183" Source="/RivalThinking.png"/>
+        <Image x:Name="RivalThinkingImage" Height="147" Canvas.Left="266" Canvas.Top="198" Width="183" Source="/RivalThinking.png" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Button x:Name="ReadyButton" Content="Ready" Height="23" Width="53" Background="White" Canvas.Left="90" Canvas.Top="409" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ReadyButton_Click"/>
 
     </Canvas>

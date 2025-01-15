@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -65,19 +64,37 @@ namespace RockScissorsPaper
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            try 
+            try
             {
-            IPAddress address = IPAddress.Parse(AddressText.Text);
-            int port = Int32.Parse(PortText.Text);
-            IPEndPoint endPoint = new IPEndPoint(address, port);
-            serverSocket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            serverSocket.Bind(endPoint);
-            serverSocket.Listen();
-            isClient = false;
-            Console.WriteLine("ServConnected");
+                IPAddress address = IPAddress.Parse(AddressText.Text);
+                int port = Int32.Parse(PortText.Text);
+                IPEndPoint endPoint = new IPEndPoint(address, port);
+                serverSocket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                serverSocket.Bind(endPoint);
+                serverSocket.Listen();
+                isClient = false;
+                Console.WriteLine("ServConnected");
 
-            serviceSocket = serverSocket.Accept();
-            Console.WriteLine("ClienteAceptado");
+                serviceSocket = serverSocket.Accept();
+                Console.WriteLine("ClienteAceptado");
+
+                PoseCombo.IsEnabled = true;
+                
+
+                StartButton.Visibility = Visibility.Hidden;
+                StopButton.Visibility = Visibility.Visible;
+                Background = Brushes.Blue;
+                ForceRepaint();
+
+                // Espero su ready
+
+                byte[] data = new byte[1];
+                serviceSocket.Receive(data);
+                Console.WriteLine("Recibiste:" + data[0]);
+                if (data[0] == 7)
+                { 
+                    ReadyButton.IsEnabled = true;
+                }
             }
             catch(Exception escepcion) { Console.WriteLine(escepcion.ToString()); }
             
@@ -86,14 +103,46 @@ namespace RockScissorsPaper
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-
+            serverSocket.Close();
+            Background = Brushes.Gray;
+            PoseCombo.IsEnabled = false;
+            ReadyButton.IsEnabled = false;
+            StartButton.Visibility = Visibility.Visible;
+            StopButton.Visibility = Visibility.Hidden;
+            Console.WriteLine("sERVIDORcERRADO");
         }
 
         private void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
+            // Envio mi ready
 
+            byte[] data = new byte[1];
+            data[0] = 7;
+            serviceSocket.Send(data);
+
+            // Espero su movimiento
+
+
+
+            // Envio mi movimiento
+            if (PoseCombo.SelectedIndex == 0)
+            {
+                youPose = 0;
+            }
+            else if (PoseCombo.SelectedIndex == 1) 
+            {
+                youPose = 1;
+            }
+            else 
+            {
+                youPose = 2;
+            }
+            
+            byte[] PoseB = new byte[1];
+            PoseB[0] = Convert.ToByte(youPose);
+            serviceSocket.Send(PoseB);
         }
-
+        
 
         private void PoseCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
