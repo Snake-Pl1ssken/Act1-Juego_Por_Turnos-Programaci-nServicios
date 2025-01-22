@@ -22,6 +22,9 @@ namespace RockScissorsPaper
         bool windowInitialized;
         bool isClient;
 
+        int recivedReady;
+        int recivedPose;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -140,11 +143,19 @@ namespace RockScissorsPaper
         {
             // Envio mi ready
             byte[] data = new byte[1];
-            data[0] = 7;
+            data[0] = 8;
             clientSocket.Send(data);
 
             // Espero su ready
-
+            clientSocket.Receive(data);
+            recivedReady = (int)data[0];
+            if (data[0] == 7)
+            {
+                Console.WriteLine("Server ready: " + recivedReady);
+            }
+            clientSocket.Receive(data);
+            recivedPose = (int)data[0];
+            Console.WriteLine("Server ready: " + recivedPose);
             // Envio mi movimiento
 
             if (PoseCombo.SelectedIndex == 0)
@@ -159,25 +170,34 @@ namespace RockScissorsPaper
             {
                 youPose = 2;
             }
+            
 
             data[0] = (byte)youPose;
             clientSocket.Send(data);
 
+
             // Recibo su movimiento
 
-            clientSocket.Receive(data);
-
-            if (clientSocket.Receive(data) == 0)
+            if (recivedPose == youPose)
             {
-                rivalPose = 0;
+                
+                Console.WriteLine("Empate no suma");
             }
-            else if (clientSocket.Receive(data) == 1)
+            else if (youPose == 0 && rivalPose == 2 || youScore == 1 && rivalPose == 0 || youScore == 2 && rivalPose == 1)
             {
-                rivalPose = 1;
+                Console.WriteLine("+1 you");
+                YouScoreLabel.ContentStringFormat = Convert.ToString(youScore++);
+                youScore++;
+                YouScoreLabel.Content = youScore.ToString();
+                ForceRepaint();
             }
-            else
+            else if (recivedPose == 0 && youPose == 2 || recivedPose == 1 && youPose == 0 || recivedPose == 2 && youPose == 1)
             {
-                rivalPose = 2;
+                Console.WriteLine("+1 rival");
+                rivalScore++;
+                RivalScoreLabel.Content = rivalScore.ToString();
+                ForceRepaint();
+                Console.WriteLine("realScore: " + rivalScore);
             }
             Console.WriteLine("Recibiste: " + data[0]);
         }
