@@ -141,6 +141,10 @@ namespace RockScissorsPaper
 
         private void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
+            RivalRockImage.Visibility = Visibility.Hidden;
+            RivalPaperImage.Visibility = Visibility.Hidden;
+            RivalScissorsImage.Visibility = Visibility.Hidden;
+            ForceRepaint();
             // Envio mi ready
             byte[] data = new byte[1];
             data[0] = 8;
@@ -152,6 +156,8 @@ namespace RockScissorsPaper
             if (data[0] == 7)
             {
                 Console.WriteLine("Server ready: " + recivedReady);
+                //RivalThinkingImage.Visibility = Visibility.Visible;
+                //ForceRepaint() ;
             }
             clientSocket.Receive(data);
             recivedPose = (int)data[0];
@@ -186,13 +192,27 @@ namespace RockScissorsPaper
             else if (youPose == 0 && rivalPose == 2 || youScore == 1 && rivalPose == 0 || youScore == 2 && rivalPose == 1)
             {
                 Console.WriteLine("+1 you");
-                YouScoreLabel.ContentStringFormat = Convert.ToString(youScore++);
                 youScore++;
+                YouScoreLabel.ContentStringFormat = Convert.ToString(youScore++);
                 YouScoreLabel.Content = youScore.ToString();
                 ForceRepaint();
             }
-            else if (recivedPose == 0 && youPose == 2 || recivedPose == 1 && youPose == 0 || recivedPose == 2 && youPose == 1)
+            
+            if (recivedPose == 0 && youPose == 2 || recivedPose == 1 && youPose == 0 || recivedPose == 2 && youPose == 1)
             {
+                RivalThinkingImage.Visibility = Visibility.Hidden;
+                if (recivedPose == 0)
+                {
+                    RivalRockImage.Visibility = Visibility.Visible;
+                }
+                else if (recivedPose == 1)
+                {
+                    RivalPaperImage.Visibility = Visibility.Visible;
+                }
+                else
+                { 
+                    RivalScissorsImage.Visibility = Visibility.Visible;
+                }
                 Console.WriteLine("+1 rival");
                 rivalScore++;
                 RivalScoreLabel.Content = rivalScore.ToString();
@@ -222,6 +242,27 @@ namespace RockScissorsPaper
             else // PoseCombo.SelectedIndex == 2
             {
                 YouScissorsImage.Visibility = Visibility.Visible;
+            }
+        }
+        private void PoseComboRival_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!windowInitialized) { return; }
+
+            RivalRockImage.Visibility = Visibility.Hidden;
+            RivalPaperImage.Visibility = Visibility.Hidden;
+            RivalScissorsImage.Visibility = Visibility.Hidden;
+
+            if (rivalPose == 0)
+            {
+                RivalRockImage.Visibility = Visibility.Visible;
+            }
+            else if (rivalPose == 1)
+            {
+                RivalPaperImage.Visibility = Visibility.Visible;
+            }
+            else // PoseCombo.SelectedIndex == 2
+            {
+                RivalScissorsImage.Visibility = Visibility.Visible;
             }
         }
 
