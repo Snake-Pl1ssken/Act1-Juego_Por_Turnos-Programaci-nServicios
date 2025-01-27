@@ -121,6 +121,7 @@ namespace RockScissorsPaper
             {
                 byte[] data = new byte[1];
                 data[0] = 7;
+                RivalThinkingImage.Visibility = Visibility.Visible;
                 serviceSocket.Send(data);
 
                 // Espero su movimiento
